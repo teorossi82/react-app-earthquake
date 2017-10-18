@@ -5,7 +5,7 @@ import './panel.scss';
 
 const Panel = () => {
 	return (
-		<div className="panel panel-left">
+		<div className="app-panel app-panel-left">
 			<ul className="content-menu">
 				<li className="block-menu">
 					<Link to="/">Ricerca</Link>

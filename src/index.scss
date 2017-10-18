@@ -6,24 +6,31 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap/_grid';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap/_forms.scss';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap/_input-groups.scss';
+@import '~bootstrap-sass/assets/stylesheets/bootstrap/_panels.scss';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap/_navbar.scss';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap/_normalize.scss';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap/_type.scss';
 $fa-font-path: '~font-awesome/fonts/';
 @import '~font-awesome/scss/font-awesome.scss';
 
-html, body, #app, .container-fluid, .panel-content, .main-content {
+html, body, #app, .container-fluid, .panel-content {
 	height:100%;
 }
 body {
 	margin: 0;
 	padding: 0;
+}
+* {
 	box-sizing: border-box;
 }
 .app-content {
-	height:calc(100% - 82px);
+	height:calc(100% - 52px);
 }
 .panel-content {
 	padding-right: 0;
 	box-shadow: 0px 2px 2px 2px #ddd;
+}
+.main-content {
+	padding-top: 10px;
+	height: calc(100% - 10px);
 }

@@ -12,7 +12,7 @@ const App = () => {
 				<div className="panel-content bg-default col-md-2 col-sm-2 col-xs-10">
 					<Panel />
 				</div>
-				<div className="main-content col-md-9 col-sm-9 col-xs-12">
+				<div className="main-content col-md-10 col-sm-10 col-xs-12">
 					<Main />
 				</div>
 			</div>

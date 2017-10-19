@@ -6,7 +6,18 @@ class SearchBar extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { term: '' };
+		this.state = { term: this.props.value };
+	}
+
+	onKeyPress = event => {
+		if (event.key === 'Enter') {
+			this.props.onSearchEnter(event.target.value);
+		}
+	}
+
+	onChange = term => {
+		this.setState({ term });
+		this.props.onSearchChange(term);
 	}
 
 	render() {
@@ -23,6 +34,7 @@ class SearchBar extends Component {
 					className="form-control" 
 					placeholder="Cerca" 
 					onChange={ev => this.onChange(ev.target.value)}
+					onKeyPress={this.onKeyPress}
 				/>
 			</div>
 		);

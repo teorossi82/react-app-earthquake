@@ -4,19 +4,27 @@ import { debounce } from 'lodash';
 import axios from 'axios';
 import moment from 'moment';
 
-import { fetchEarthquakes, prepareFetchEarthquake } from '../../store/earthquake/earthquake.actions';
+import { 
+	fetchEarthquakes, 
+	prepareFetchEarthquake } 
+from '../../store/earthquake/earthquake.actions';
 import { setLocation } from '../../store/location/location.actions';
 import { Api } from '../../config';
 import SearchBar from '../search_bar/search_bar';
 import Map from '../maps/maps.MarkerClikable';
 import CustomDatePicker from '../custom_date_picker/custom_date_picker';
+import CustomSlider from '../custom_slider/custom_slider';
 
 class SearchData extends Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
+			magnitude: 4,
+			radius: 300,
 			dateFrom: new Date(2017, 0, 1),
-			dateTo: new Date()
+			dateTo: new Date(),
+			activeMarker: {}
 		};
 	}
 	render() {
@@ -54,7 +62,11 @@ class SearchData extends Component {
 				},
 				{
 					label: 'minmag',
-					value: '4'
+					value: this.state.magnitude
+				},
+				{
+					label: 'maxradiuskm',
+					value: this.state.radius
 				},
 				{
 					label: 'lat',
@@ -66,7 +78,7 @@ class SearchData extends Component {
 				},
 				{
 					label: 'limit',
-					value: '50'
+					value: '100'
 				}
 			];
 			this.props.fetchEarthquakes(options);
@@ -87,14 +99,17 @@ class SearchData extends Component {
 						markers={this.props.earthquakes.data} 
 						center={this.props.location}  
 						zoom={5}
+						Apikey={Api.google.key}
+						activeMarker={this.state.activeMarker}
+						onMarkerClick={activeMarker => { this.setState({ activeMarker }); }}
 					/>
 				</div>
 			);
 		};
 
-		this.onDateChange = (date, instance) => {
+		this.onSearchParamChange = (val, instance) => {
 			const value = {};
-			value[instance] = date;
+			value[instance] = val;
 			this.setState(value);
 		};
 
@@ -102,20 +117,53 @@ class SearchData extends Component {
 			<div className="search_data">
 				<div className="row">
 					<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<SearchBar onSearchChange={debounce(this.onSearchChange, 500)} />
+						<SearchBar 
+							value={this.props.location.city}
+							onSearchChange={debounce(this.onSearchChange, 500)} 
+							onSearchEnter={this.onSearchChange}
+						/>
 					</div>
 					<div className="content-date col-lg-4 col-md-4 col-sm-6 col-xs-6">
 						<CustomDatePicker
 							value={this.state.dateFrom}
 							instance='dateFrom'
-							onDateChange={this.onDateChange}
+							onDateChange={this.onSearchParamChange}
 						/>
 					</div>
 					<div className="content-date col-lg-4 col-md-4 col-sm-6 col-xs-6">
 						<CustomDatePicker
 							value={this.state.dateTo}
 							instance='dateTo'
-							onDateChange={this.onDateChange}
+							onDateChange={this.onSearchParamChange}
+						/>
+					</div>
+				</div>
+				<div className="row">
+					<div className="content-slider col-lg-6 col-md-6 col-sm-6 col-xs-6">
+						<CustomSlider 
+							label="Magnitudo"
+							min={2} 
+							max={7}
+							defaultValue={this.state.magnitude}
+							dots
+							color="red"
+							dotStyle={{ borderColor: 'grey' }}
+							railStyle={{ backgroundColor: 'grey' }}
+							trackStyle={{ backgroundColor: 'red' }}
+							instance="magnitude"
+							onSliderChange={this.onSearchParamChange}
+						/>
+					</div>
+					<div className="content-slider col-lg-6 col-md-6 col-sm-6 col-xs-6">
+						<CustomSlider 
+							label="Raggio"
+							min={100} 
+							max={500}
+							defaultValue={this.state.radius}
+							instance="radius"
+							railStyle={{ backgroundColor: 'grey' }}
+							trackStyle={{ backgroundColor: 'blue' }}
+							onSliderChange={this.onSearchParamChange}
 						/>
 					</div>
 				</div>

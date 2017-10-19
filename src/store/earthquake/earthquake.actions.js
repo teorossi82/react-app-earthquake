@@ -30,6 +30,10 @@ const mapField = [
 		index: 10,
 		field: 'mag',
 		num: true
+	},
+	{
+		index: 12,
+		field: 'place'
 	}
 ];
 function CSVToArray(strData, strDelimiter) {
@@ -66,7 +70,7 @@ export const fetchEarthquakes = options => {
 	}
     return (dispatch) => {
 		axios.get(
-			`${Api.ingv.url}${query}format=text&maxradiuskm=200`
+			`${Api.ingv.url}${query}format=text`
 		)
 		.then(response => {
 			const earthquakes = CSVToArray(response.data, '|');

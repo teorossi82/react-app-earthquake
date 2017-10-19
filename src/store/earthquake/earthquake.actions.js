@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import {
+	PREPARE_FETCH_EARTHQUAKES,
     FETCH_EARTHQUAKES_FAILED,
     FETCH_EARTHQUAKES_SUCCESS
 } from './earthquake.types';
@@ -34,8 +35,7 @@ const mapField = [
 function CSVToArray(strData, strDelimiter) {
 	const arrObjects = strData.split('\n');
 	const arrParsed = [];
-	//const arrKey = arrObjects[0].split(strDelimiter);
-	for (let i = 1; i <= arrObjects.length; i++) {
+	for (let i = 1; i < arrObjects.length - 1; i++) {
 		try {
 			const arrLine = arrObjects[i].split(strDelimiter);
 			const obj = {};
@@ -50,6 +50,11 @@ function CSVToArray(strData, strDelimiter) {
 	}
 	return arrParsed;
 }
+
+export const prepareFetchEarthquake = () => ({
+	type: PREPARE_FETCH_EARTHQUAKES,
+	payload: ''
+});
 
 export const fetchEarthquakes = options => {
 	let query = '';

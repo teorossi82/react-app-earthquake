@@ -1,0 +1,31 @@
+.video_list_item {
+	&.list-group-item {
+		font-size: 14px;
+	  	cursor: pointer;
+	  	padding: 10px 0;
+	  	border: none;
+	}
+	&.list-group-item:hover {
+	  	background-color: #eee;
+	}
+	.media {
+		min-height: 90px;
+	}
+	.media_left {
+	    position: absolute;
+	}
+	img {
+	  	max-width: 90px;
+	}
+	.media_body {
+	    margin-left: 95px;
+	    text-transform: lowercase;
+	}
+	.media_heading {
+		font-size: 1em;
+		font-weight: bold;
+	}
+	.media_desc {
+		font-size: 0.80em;
+	}
+}

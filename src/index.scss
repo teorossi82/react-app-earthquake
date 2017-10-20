@@ -6,6 +6,7 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap/_grid';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap/_forms.scss';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap/_input-groups.scss';
+@import '~bootstrap-sass/assets/stylesheets/bootstrap/_list-group.scss';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap/_panels.scss';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap/_navbar.scss';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap/_normalize.scss';
@@ -13,7 +14,7 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 $fa-font-path: '~font-awesome/fonts/';
 @import '~font-awesome/scss/font-awesome.scss';
 
-html, body, #app, .container-fluid, .panel-content {
+html, body, #app, .container-fluid, .panel-content, .main, .search_data {
 	height:100%;
 }
 body {
@@ -29,10 +30,22 @@ body {
 .panel-content {
 	padding-right: 0;
 	box-shadow: 0px 2px 2px 2px #ddd;
+	@media (max-width: 768px) {
+		display: none;
+	}
 }
 .main-content {
 	padding-top: 10px;
-	height: calc(100% - 10px);
+	height: calc(100%);
+	overflow-y: scroll;
+}
+.panel-map, .panel-videos {
+	min-height:640px;
+}
+.panel-videos {
+	@media (max-width: 992px) {
+		min-height:auto;
+	}
 }
 .content-date {
 	overflow: visible;

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { debounce } from 'lodash';
 import axios from 'axios';
 import moment from 'moment';
+import YTSearch from 'youtube-api-search';
 
 import { 
 	fetchEarthquakes, 
@@ -14,6 +15,7 @@ import SearchBar from '../search_bar/search_bar';
 import Map from '../maps/maps.MarkerClikable';
 import CustomDatePicker from '../custom_date_picker/custom_date_picker';
 import CustomSlider from '../custom_slider/custom_slider';
+import VideoList from '../video_list/video_list';
 
 class SearchData extends Component {
 	constructor(props) {
@@ -24,7 +26,9 @@ class SearchData extends Component {
 			radius: 300,
 			dateFrom: new Date(2017, 0, 1),
 			dateTo: new Date(),
-			activeMarker: {}
+			activeMarker: {},
+			videos: [],
+			selectedVideo: null
 		};
 	}
 	render() {
@@ -84,8 +88,18 @@ class SearchData extends Component {
 			this.props.fetchEarthquakes(options);
 		};
 
+		const videoSearch = term => {
+			YTSearch({ key: Api.google.key, term }, videos => {
+				this.setState({
+					videos,
+					selectedVideo: videos[0]
+				});
+			});
+		};
+
 		this.onSearchChange = term => {
 			fetchCityGeocode(term);
+			videoSearch(`earthquakes ${term}`);
 		};
 
 		this.renderMap = () => {
@@ -123,14 +137,14 @@ class SearchData extends Component {
 							onSearchEnter={this.onSearchChange}
 						/>
 					</div>
-					<div className="content-date col-lg-4 col-md-4 col-sm-6 col-xs-6">
+					<div className="content-date col-lg-4 col-md-4 col-sm-6 col-xs-12">
 						<CustomDatePicker
 							value={this.state.dateFrom}
 							instance='dateFrom'
 							onDateChange={this.onSearchParamChange}
 						/>
 					</div>
-					<div className="content-date col-lg-4 col-md-4 col-sm-6 col-xs-6">
+					<div className="content-date col-lg-4 col-md-4 col-sm-6 col-xs-12">
 						<CustomDatePicker
 							value={this.state.dateTo}
 							instance='dateTo'
@@ -156,22 +170,22 @@ class SearchData extends Component {
 					</div>
 					<div className="content-slider col-lg-6 col-md-6 col-sm-6 col-xs-6">
 						<CustomSlider 
-							label="Raggio"
+							label="Raggio (Km)"
 							min={100} 
 							max={500}
 							defaultValue={this.state.radius}
 							instance="radius"
 							railStyle={{ backgroundColor: 'grey' }}
-							trackStyle={{ backgroundColor: 'blue' }}
+							trackStyle={{ backgroundColor: '#337ab7' }}
 							onSliderChange={this.onSearchParamChange}
 						/>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-						<div className="panel panel-default">
+						<div className="panel panel-default panel-map">
 							<div className="panel-heading">
-								<h3 className="panel-title">Earthquakes' map</h3>
+								<h3 className="panel-title">Mappa dei terremoti</h3>
 							</div>
 							<div className="panel-body">
 								{this.renderMap()}
@@ -179,12 +193,15 @@ class SearchData extends Component {
 						</div>
 					</div>
 					<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<div className="panel panel-default">
+						<div className="panel panel-default panel-videos">
 							<div className="panel-heading">
 								<h3 className="panel-title">Video</h3>
 							</div>
 							<div className="panel-body">
-								Panel content
+								<VideoList
+									onVideoSelect={selectedVideo => this.setState({ selectedVideo })}
+									videos={this.state.videos}
+								/>
 							</div>
 						</div>
 					</div>

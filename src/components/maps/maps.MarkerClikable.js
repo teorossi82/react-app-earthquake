@@ -10,7 +10,25 @@ import moment from 'moment';
 
 const getInfoStyle = (marker, active) => {
   const { mag } = marker;
-  const cs = mag < 4 ? { bg: 'yellow', zi: 1, s: 25 } : mag < 5 ? { bg: 'orange', zi: 2, s: 30 } : { bg: 'red', zi: 3, s: 35 };
+  //const cs = mag < 4 ? { bg: 'yellow', zi: 1, s: 25 } : mag < 5 ? { bg: 'orange', zi: 2, s: 30 } : { bg: 'rgba(170, 170, 170, 0.6)', zi: 3, s: 35 };
+  let cs = 1;
+  switch (true) {
+    case (mag < 3):
+      cs = { bg: 'yellow', s: 15 };
+      break;
+    case (mag < 4):
+      cs = { bg: 'yellow', s: 20 };
+      break;
+    case (mag < 5):
+      cs = { bg: 'orange', s: 27 };
+      break;
+    case (mag < 6):
+      cs = { bg: 'red', s: 35 };
+      break;
+    case (mag >= 6):
+      cs = { bg: 'red', s: 40 };
+      break;
+  }
   const style = marker.id === active.id ?
                   { backgroundColor: '#F9F9F9', width: '100px', fontSize: '12px', padding: '5px' }
                     :
@@ -81,8 +99,8 @@ const MapWithAMarkerWithLabel = compose(
         <MarkerWithLabel
           key={marker.id}
           position={{ lat: marker.lat, lng: marker.lng }}
-          opacity={props.zoom > 9 ? 1 : 0}
-          labelAnchor={new google.maps.Point(0, 0)}
+          labelAnchor={new google.maps.Point(15, 35)}
+          opacity={0}
           labelStyle={getInfoStyle(marker, props.activeMarker)}
           zIndex={getZIndex(marker, props.activeMarker)}
           onClick={() => props.onMarkerClick(marker)}
@@ -100,7 +118,7 @@ class Map extends React.PureComponent {
       <MapWithAMarkerWithLabel
         googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${this.props.Apikey}&v=3.exp&libraries=geometry,drawing,places`}
         loadingElement={<div style={{ height: '100%' }} />}
-        containerElement={<div style={{ height: '400px' }} />}
+        containerElement={<div style={{ height: '550px' }} />}
         mapElement={<div style={{ height: '100%' }} />}
         getInfoStyle={getInfoStyle}
         activeMarker={this.props.activeMarker}

@@ -21,11 +21,6 @@ class SearchBar extends Component {
 	}
 
 	render() {
-		this.onChange = term => {
-			this.setState({ term });
-			this.props.onSearchChange(term);
-		};
-
 		return (
 			<div className="search_bar form-group">
 				<input 

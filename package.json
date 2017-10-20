@@ -22,7 +22,8 @@
     "react-router-dom": "^4.2.2",
     "recompose": "^0.26.0",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "youtube-api-search": "^0.0.5"
   },
   "devDependencies": {
     "babel-core": "^6.2.1",

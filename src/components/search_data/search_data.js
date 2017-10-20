@@ -115,10 +115,17 @@ class SearchData extends Component {
 						zoom={5}
 						Apikey={Api.google.key}
 						activeMarker={this.state.activeMarker}
-						onMarkerClick={activeMarker => { this.setState({ activeMarker }); }}
+						onMarkerClick={onMarkerClick}
 					/>
 				</div>
 			);
+		};
+
+		const onMarkerClick = activeMarker => {
+			if (this.state.activeMarker.id === activeMarker.id) {
+				return this.setState({ activeMarker: {} });
+			}
+			this.setState({ activeMarker });
 		};
 
 		this.onSearchParamChange = (val, instance) => {

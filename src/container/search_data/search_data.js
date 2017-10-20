@@ -11,11 +11,11 @@ import {
 from '../../store/earthquake/earthquake.actions';
 import { setLocation } from '../../store/location/location.actions';
 import { Api } from '../../config';
-import SearchBar from '../search_bar/search_bar';
-import Map from '../maps/maps.MarkerClikable';
-import CustomDatePicker from '../custom_date_picker/custom_date_picker';
-import CustomSlider from '../custom_slider/custom_slider';
-import VideoList from '../video_list/video_list';
+import SearchBar from '../../components/search_bar/search_bar';
+import Map from '../../components/maps/maps.MarkerClikable';
+import CustomDatePicker from '../../components/custom_date_picker/custom_date_picker';
+import CustomSlider from '../../components/custom_slider/custom_slider';
+import VideoList from '../../components/video_list/video_list';
 
 class SearchData extends Component {
 	constructor(props) {
@@ -31,8 +31,13 @@ class SearchData extends Component {
 			selectedVideo: null
 		};
 	}
+
+	componentDidMount() {
+		this.fetchCityGeocode(this.props.location.city);
+	}
+
 	render() {
-		const fetchCityGeocode = term => {
+		this.fetchCityGeocode = term => {
 			axios.get(
 				`${Api.google.geocodeUrl}address=${term}&key=${Api.google.key}`
 			)
@@ -97,12 +102,12 @@ class SearchData extends Component {
 			});
 		};
 
-		this.onSearchChange = term => {
-			fetchCityGeocode(term);
+		const onSearchChange = term => {
+			this.fetchCityGeocode(term);
 			videoSearch(`earthquakes ${term}`);
 		};
 
-		this.renderMap = () => {
+		const renderMap = () => {
 			if (this.props.earthquakes && this.props.earthquakes.loading) {
 				return <div>Loading...</div>;
 			}
@@ -140,8 +145,8 @@ class SearchData extends Component {
 					<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 						<SearchBar 
 							value={this.props.location.city}
-							onSearchChange={debounce(this.onSearchChange, 500)} 
-							onSearchEnter={this.onSearchChange}
+							onSearchChange={debounce(onSearchChange, 500)} 
+							onSearchEnter={onSearchChange}
 						/>
 					</div>
 					<div className="content-date col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -195,7 +200,7 @@ class SearchData extends Component {
 								<h3 className="panel-title">Mappa dei terremoti</h3>
 							</div>
 							<div className="panel-body">
-								{this.renderMap()}
+								{renderMap()}
 							</div>
 						</div>
 					</div>

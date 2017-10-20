@@ -7,7 +7,7 @@ import ReduxThunk from 'redux-thunk';
 
 import './index.scss';
 
-import App from './components/App';
+import App from './App';
 import Reducers from './store';
 
 const middlewares = [ReduxThunk];

@@ -24,7 +24,7 @@ class SearchData extends Component {
 		this.state = {
 			magnitude: 4,
 			radius: 300,
-			dateFrom: new Date(2017, 0, 1),
+			dateFrom: new Date(2016, 0, 1),
 			dateTo: new Date(),
 			activeMarker: {},
 			videos: [],
@@ -33,7 +33,12 @@ class SearchData extends Component {
 	}
 
 	componentDidMount() {
-		this.fetchCityGeocode(this.props.location.city);
+		if (this.props.earthquakes.data.length) {
+			return;
+		}
+		const { city } = this.props.location;
+		this.fetchCityGeocode(city);
+		this.videoSearch(`earthquakes ${city}`);
 	}
 
 	render() {
@@ -46,7 +51,7 @@ class SearchData extends Component {
 					throw new Error('Get city coordinates error');
 				}
 				const location = {
-					city: response.data.results[0].address_components.long_name,
+					city: response.data.results[0].address_components[0].long_name,
 					lat: response.data.results[0].geometry.location.lat,
 					lng: response.data.results[0].geometry.location.lng
 				};
@@ -93,7 +98,7 @@ class SearchData extends Component {
 			this.props.fetchEarthquakes(options);
 		};
 
-		const videoSearch = term => {
+		this.videoSearch = term => {
 			YTSearch({ key: Api.google.key, term }, videos => {
 				this.setState({
 					videos,
@@ -104,7 +109,7 @@ class SearchData extends Component {
 
 		const onSearchChange = term => {
 			this.fetchCityGeocode(term);
-			videoSearch(`earthquakes ${term}`);
+			this.videoSearch(`earthquakes ${term}`);
 		};
 
 		const renderMap = () => {
@@ -133,7 +138,7 @@ class SearchData extends Component {
 			this.setState({ activeMarker });
 		};
 
-		this.onSearchParamChange = (val, instance) => {
+		const onSearchParamChange = (val, instance) => {
 			const value = {};
 			value[instance] = val;
 			this.setState(value);
@@ -153,14 +158,14 @@ class SearchData extends Component {
 						<CustomDatePicker
 							value={this.state.dateFrom}
 							instance='dateFrom'
-							onDateChange={this.onSearchParamChange}
+							onDateChange={onSearchParamChange}
 						/>
 					</div>
 					<div className="content-date col-lg-4 col-md-4 col-sm-6 col-xs-12">
 						<CustomDatePicker
 							value={this.state.dateTo}
 							instance='dateTo'
-							onDateChange={this.onSearchParamChange}
+							onDateChange={onSearchParamChange}
 						/>
 					</div>
 				</div>
@@ -177,7 +182,7 @@ class SearchData extends Component {
 							railStyle={{ backgroundColor: 'grey' }}
 							trackStyle={{ backgroundColor: 'red' }}
 							instance="magnitude"
-							onSliderChange={this.onSearchParamChange}
+							onSliderChange={onSearchParamChange}
 						/>
 					</div>
 					<div className="content-slider col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -189,7 +194,7 @@ class SearchData extends Component {
 							instance="radius"
 							railStyle={{ backgroundColor: 'grey' }}
 							trackStyle={{ backgroundColor: '#337ab7' }}
-							onSliderChange={this.onSearchParamChange}
+							onSliderChange={onSearchParamChange}
 						/>
 					</div>
 				</div>

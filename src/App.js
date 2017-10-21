@@ -27,6 +27,14 @@ const App = () => {
 						</ul>
 					</div>
 				</div>
+				<div className="menu-content">
+					<div className="block-menu">
+						<Link to="/">Ricerca</Link>
+					</div>
+					<div className="block-menu">
+						<Link to="/analyze">Analisi</Link>
+					</div>
+				</div>
 				<div className="main-content col-md-10 col-sm-10 col-xs-12">
 					<div className="main">
 						<Switch>

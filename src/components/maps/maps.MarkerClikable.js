@@ -118,7 +118,7 @@ class Map extends React.PureComponent {
       <MapWithAMarkerWithLabel
         googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${this.props.Apikey}&v=3.exp&libraries=geometry,drawing,places`}
         loadingElement={<div style={{ height: '100%' }} />}
-        containerElement={<div style={{ height: '550px' }} />}
+        containerElement={<div style={{ height: `${this.props.height || 550}px`, width: `${this.props.width}px` || '100%' }} />}
         mapElement={<div style={{ height: '100%' }} />}
         getInfoStyle={getInfoStyle}
         activeMarker={this.props.activeMarker}

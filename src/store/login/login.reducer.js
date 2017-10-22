@@ -21,12 +21,14 @@ export default (state = INITIAL_STATE, action) => {
 			};
 		case LOGIN_USER:
 			localStorage.setItem('rae_user', JSON.stringify({username:state.username,password:state.password,isLoggedIn:true}));
+			window.location.href = '/';
 			return {
 				...state,
 				isLoggedIn: true
 			};
 		case LOGOUT_USER:
 			localStorage.removeItem('rae_user');
+			window.location.href = '/';
 			return {
 				...state,
 				isLoggedIn: false

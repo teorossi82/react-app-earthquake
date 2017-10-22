@@ -2,6 +2,8 @@ import React from 'react';
 
 import './header.scss';
 
+import LogoutBtn from '../logoutBtn/logoutBtn';
+
 const Header = ({ image, label, bg, color }) => {
 	return (
 		<div className="app-header">
@@ -14,6 +16,9 @@ const Header = ({ image, label, bg, color }) => {
 							<img alt="Earthquake" src={image} />
 						</a>
 						<p className="navbar-text" style={{ color: `${color || '#000'}` }}>{label}</p>
+					</div>
+					<div className="block-btn-right">
+						<LogoutBtn />
 					</div>
 				</div>
 			</nav>

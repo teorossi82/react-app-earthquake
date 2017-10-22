@@ -4,5 +4,20 @@
 		img {
 			height: 100%;
 		}
+		.navbar-header {
+		    float: left;
+		    width: calc(100% - 90px);
+		}
+	}
+	.block-btn-right{
+		float:right;
+		padding: 8px 0px;
+	}
+	.btn-logout {
+		.label {
+			@media (max-width: 768px) {
+				display: none;
+			}
+		}
 	}
 }

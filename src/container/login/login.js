@@ -7,10 +7,6 @@ import * as actions from '../../store/login/login.actions';
 
 class Login extends Component {
 	render() {
-		if (this.props.login.isLoggedIn) {
-			window.location.href = '/';
-		}
-
 		const onKeyPress = event => {
 			if (event.key === 'Enter') {
 				fetchLogin();

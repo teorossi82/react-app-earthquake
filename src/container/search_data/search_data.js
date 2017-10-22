@@ -11,6 +11,7 @@ import {
 from '../../store/earthquake/earthquake.actions';
 import { setSearchValue } from '../../store/search/search.actions';
 import { setLocation } from '../../store/location/location.actions';
+import { setVideo } from '../../store/video/video.actions';
 import { Api } from '../../config';
 import SearchBar from '../../components/search_bar/search_bar';
 import Spinner from '../../components/spinner/spinner';
@@ -25,7 +26,6 @@ class SearchData extends Component {
 
 		this.state = {
 			activeMarker: {},
-			videos: [],
 			selectedVideo: null
 		};
 	}
@@ -98,8 +98,8 @@ class SearchData extends Component {
 
 		this.videoSearch = term => {
 			YTSearch({ key: Api.google.key, term }, videos => {
+				this.props.setVideo(videos);
 				this.setState({
-					videos,
 					selectedVideo: videos[0]
 				});
 			});
@@ -213,7 +213,7 @@ class SearchData extends Component {
 							<div className="panel-body">
 								<VideoList
 									onVideoSelect={selectedVideo => this.setState({ selectedVideo })}
-									videos={this.state.videos}
+									videos={this.props.videos}
 								/>
 							</div>
 						</div>
@@ -224,8 +224,8 @@ class SearchData extends Component {
 	}
 }
 
-const mapStateToProps = ({ earthquakes, location, search }) => {
-    return { earthquakes, location, search };
+const mapStateToProps = ({ earthquakes, location, search, videos }) => {
+    return { earthquakes, location, search, videos };
 };
 
-export default connect(mapStateToProps, { fetchEarthquakes, prepareFetchEarthquake, setSearchValue, setLocation })(SearchData);
+export default connect(mapStateToProps, { fetchEarthquakes, prepareFetchEarthquake, setSearchValue, setLocation, setVideo })(SearchData);

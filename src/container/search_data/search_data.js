@@ -10,7 +10,6 @@ import {
 	prepareFetchEarthquake } 
 from '../../store/earthquake/earthquake.actions';
 import { setSearchValue } from '../../store/search/search.actions';
-import { setLocation } from '../../store/location/location.actions';
 import { setVideo } from '../../store/video/video.actions';
 import { Api } from '../../config';
 import SearchBar from '../../components/search_bar/search_bar';
@@ -34,7 +33,7 @@ class SearchData extends Component {
 		if (this.props.earthquakes.data.length) {
 			return;
 		}
-		const { city } = this.props.location;
+		const { city } = this.props.search.location;
 		this.fetchCityGeocode(city);
 		this.videoSearch(`earthquakes ${city}`);
 	}
@@ -53,7 +52,7 @@ class SearchData extends Component {
 					lat: response.data.results[0].geometry.location.lat,
 					lng: response.data.results[0].geometry.location.lng
 				};
-				this.props.setLocation(location);
+				this.props.setSearchValue('location', location);
 				this.props.prepareFetchEarthquake();
 				prepareFetchEarthquake(location.lat, location.lng);
 			})
@@ -119,7 +118,7 @@ class SearchData extends Component {
 					<div className="">Sono stati trovati {this.props.earthquakes.data.length} eventi</div>
 					<Map 
 						markers={this.props.earthquakes.data} 
-						center={this.props.location}  
+						center={this.props.search.location}  
 						zoom={5}
 						Apikey={Api.google.key}
 						activeMarker={this.state.activeMarker}
@@ -145,7 +144,7 @@ class SearchData extends Component {
 				<div className="row">
 					<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 						<SearchBar 
-							value={this.props.location.city}
+							value={this.props.search.location.city}
 							onSearchChange={debounce(onSearchChange, 500)} 
 							onSearchEnter={onSearchChange}
 						/>
@@ -224,8 +223,8 @@ class SearchData extends Component {
 	}
 }
 
-const mapStateToProps = ({ earthquakes, location, search, videos }) => {
-    return { earthquakes, location, search, videos };
+const mapStateToProps = ({ earthquakes, search, videos }) => {
+    return { earthquakes, search, videos };
 };
 
-export default connect(mapStateToProps, { fetchEarthquakes, prepareFetchEarthquake, setSearchValue, setLocation, setVideo })(SearchData);
+export default connect(mapStateToProps, { fetchEarthquakes, prepareFetchEarthquake, setSearchValue, setVideo })(SearchData);

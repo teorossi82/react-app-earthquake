@@ -3,6 +3,7 @@ import {
 } from './search.types';
 
 const INITIAL_STATE = {
+	location: { city: 'Matelica', lat: 42, lng: 13 },
 	magnitude: 4,
 	radius: 300,
 	dateFrom: new Date(2016, 0, 1),

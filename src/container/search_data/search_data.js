@@ -9,6 +9,7 @@ import {
 	fetchEarthquakes, 
 	prepareFetchEarthquake } 
 from '../../store/earthquake/earthquake.actions';
+import { setSearchValue } from '../../store/search/search.actions';
 import { setLocation } from '../../store/location/location.actions';
 import { Api } from '../../config';
 import SearchBar from '../../components/search_bar/search_bar';
@@ -22,10 +23,6 @@ class SearchData extends Component {
 		super(props);
 
 		this.state = {
-			magnitude: 4,
-			radius: 300,
-			dateFrom: new Date(2016, 0, 1),
-			dateTo: new Date(),
 			activeMarker: {},
 			videos: [],
 			selectedVideo: null
@@ -68,19 +65,19 @@ class SearchData extends Component {
 			const options = [
 				{
 					label: 'starttime',
-					value: moment(this.state.dateFrom).format('YYYY-MM-DD')
+					value: moment(this.props.search.dateFrom).format('YYYY-MM-DD')
 				},
 				{
 					label: 'endtime',
-					value: moment(this.state.dateTo).format('YYYY-MM-DD')
+					value: moment(this.props.search.dateTo).format('YYYY-MM-DD')
 				},
 				{
 					label: 'minmag',
-					value: this.state.magnitude
+					value: this.props.search.magnitude
 				},
 				{
 					label: 'maxradiuskm',
-					value: this.state.radius
+					value: this.props.search.radius
 				},
 				{
 					label: 'lat',
@@ -139,9 +136,7 @@ class SearchData extends Component {
 		};
 
 		const onSearchParamChange = (val, instance) => {
-			const value = {};
-			value[instance] = val;
-			this.setState(value);
+			this.props.setSearchValue(instance, val);
 		};
 
 		return (
@@ -156,14 +151,14 @@ class SearchData extends Component {
 					</div>
 					<div className="content-date col-lg-4 col-md-4 col-sm-6 col-xs-12">
 						<CustomDatePicker
-							value={this.state.dateFrom}
+							value={this.props.search.dateFrom}
 							instance='dateFrom'
 							onDateChange={onSearchParamChange}
 						/>
 					</div>
 					<div className="content-date col-lg-4 col-md-4 col-sm-6 col-xs-12">
 						<CustomDatePicker
-							value={this.state.dateTo}
+							value={this.props.search.dateTo}
 							instance='dateTo'
 							onDateChange={onSearchParamChange}
 						/>
@@ -175,7 +170,7 @@ class SearchData extends Component {
 							label="Magnitudo"
 							min={2} 
 							max={7}
-							defaultValue={this.state.magnitude}
+							defaultValue={this.props.search.magnitude}
 							dots
 							color="red"
 							dotStyle={{ borderColor: 'grey' }}
@@ -190,7 +185,7 @@ class SearchData extends Component {
 							label="Raggio (Km)"
 							min={100} 
 							max={500}
-							defaultValue={this.state.radius}
+							defaultValue={this.props.search.radius}
 							instance="radius"
 							railStyle={{ backgroundColor: 'grey' }}
 							trackStyle={{ backgroundColor: '#337ab7' }}
@@ -228,8 +223,8 @@ class SearchData extends Component {
 	}
 }
 
-const mapStateToProps = ({ earthquakes, location }) => {
-    return { earthquakes, location };
+const mapStateToProps = ({ earthquakes, location, search }) => {
+    return { earthquakes, location, search };
 };
 
-export default connect(mapStateToProps, { fetchEarthquakes, prepareFetchEarthquake, setLocation })(SearchData);
+export default connect(mapStateToProps, { fetchEarthquakes, prepareFetchEarthquake, setSearchValue, setLocation })(SearchData);

@@ -18,15 +18,16 @@ const store = createStore(
     applyMiddleware(...middlewares)
 );
 
-function PrivateRoute({ component: Component, login, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={(props) => login.isLoggedIn === true
-        ? <Component {...props} />
-        : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
-    />
-  );
+function PrivateRoute({ component: Component, ...rest }) {
+	const { login } = store.getState();
+	return (
+		<Route
+			{...rest}
+			render={props => login.isLoggedIn === true
+				? <Component {...props} />
+				: <Redirect to={{ pathname: '/login' }} />}
+		/>
+	);
 }
 
 const App = () => {
@@ -66,13 +67,11 @@ const App = () => {
 								<Switch>
 									<Route path='/login' component={Login} />
 									<PrivateRoute 
-										login={store.getState().login} 
 										exact 
 										path="/" 
 										component={SearchData} 
 									/>
 									<PrivateRoute 
-										login={store.getState().login} 
 										path="/analyze" 
 										component={AnalyzeData} 
 									/>

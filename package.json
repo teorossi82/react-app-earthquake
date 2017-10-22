@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "bootstrap-sass": "^3.3.7",
+    "firebase": "^4.6.0",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.4",
     "moment": "^2.19.1",

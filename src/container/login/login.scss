@@ -94,8 +94,10 @@
   .login-help{
     font-size: 12px;
   } 
-  .block-error-msg{
-    margin:5px;
-    color:red;
-  }  
+  .block-error {
+    font-size: 14px;
+    text-align: center;
+    padding: 10px;
+    color: #d9534f;
+  }
 }

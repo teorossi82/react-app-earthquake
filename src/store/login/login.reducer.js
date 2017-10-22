@@ -20,8 +20,12 @@ export default (state = INITIAL_STATE, action) => {
 				[action.payload.field]: action.payload.value
 			};
 		case LOGIN_USER:
-			localStorage.setItem('rae_user', JSON.stringify({username:state.username,password:state.password,isLoggedIn:true}));
-			window.location.href = '/';
+			localStorage.setItem(
+				'rae_user', 
+				JSON.stringify(
+					{ username: state.username, password: state.password, isLoggedIn: true }
+				)
+			);
 			return {
 				...state,
 				isLoggedIn: true

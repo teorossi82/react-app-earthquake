@@ -227,4 +227,6 @@ const mapStateToProps = ({ earthquakes, search, videos }) => {
     return { earthquakes, search, videos };
 };
 
-export default connect(mapStateToProps, { fetchEarthquakes, prepareFetchEarthquake, setSearchValue, setVideo })(SearchData);
+export default connect(mapStateToProps, 
+	{ fetchEarthquakes, prepareFetchEarthquake, setSearchValue, setVideo }
+)(SearchData);

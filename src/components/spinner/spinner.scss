@@ -1,0 +1,62 @@
+.custom-loader{
+    &#loadingService-custom-loader{
+        position: absolute;
+        width: 100%;
+        top: 45%;
+        z-index: 10;
+    }
+    .custom-message {
+        width: 500px;
+        margin: auto;
+        border-radius: 5px;
+        padding: 20px;
+        text-shadow: 2px 2px 4px #888;
+        font-size: 20px;
+        text-align: center;
+        line-height: 30px;
+    }
+    .custom-spinner {
+      margin: 40px auto;
+      width: 100px;
+      text-align: center;
+      background: rgba(255,255,255,0.3);
+      padding: 20px 10px;
+      border-radius: 5px;
+    }
+
+    .custom-spinner > div {
+      width: 18px;
+      height: 18px;
+      background-color: #333;
+
+      border-radius: 100%;
+      display: inline-block;
+      -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+      animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    }
+
+    .custom-spinner .bounce1 {
+      -webkit-animation-delay: -0.32s;
+      animation-delay: -0.32s;
+    }
+
+    .custom-spinner .bounce2 {
+      -webkit-animation-delay: -0.16s;
+      animation-delay: -0.16s;
+    }
+
+    @-webkit-keyframes sk-bouncedelay {
+      0%, 80%, 100% { -webkit-transform: scale(0) }
+      40% { -webkit-transform: scale(1.0) }
+    }
+
+    @keyframes sk-bouncedelay {
+      0%, 80%, 100% { 
+        -webkit-transform: scale(0);
+        transform: scale(0);
+      } 40% { 
+        -webkit-transform: scale(1.0);
+        transform: scale(1.0);
+      }
+    }
+}

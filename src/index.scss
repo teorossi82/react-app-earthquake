@@ -15,6 +15,8 @@ $fa-font-path: '~font-awesome/fonts/';
 @import '~font-awesome/scss/font-awesome.scss';
 @import '~weather-icons/css/weather-icons.min.css';
 
+$primary-color: #337ab7;
+
 html, body, #app, .container-fluid, .panel-content, .main, .search_data {
 	height:100%;
 }
@@ -50,6 +52,10 @@ body {
 	    a {
     		color: #444;
     		text-decoration: none;
+    		&.active {
+    			color: $primary-color;
+    			text-decoration: underline;
+    		}
     	}
 	}
 }
@@ -82,6 +88,10 @@ body {
     	a {
     		color: #444;
     		text-decoration: none;
+    		&.active {
+    			color: $primary-color;
+    			text-decoration: underline;
+    		}
     	}
 	}
 }
@@ -120,7 +130,7 @@ body {
 					color: #f0ad4e;
 				}
 				&.night {
-					color: #337ab7;
+					color: $primary-color;;
 				}
 			}
 			.block-summary {
@@ -172,7 +182,7 @@ body {
 			    		color: #d9534f
 			    	}
 			    	&.cold {
-			    		color: #337ab7
+			    		color: $primary-color;
 			    	}
 			    }
 			}

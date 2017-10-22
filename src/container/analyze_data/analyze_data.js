@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import { Api } from '../../config';
 import Map from '../../components/maps/maps.MarkerClikable';
+import Spinner from '../../components/spinner/spinner';
 
 class AnalyzeData extends Component {
 	constructor(props) {
@@ -14,7 +15,8 @@ class AnalyzeData extends Component {
 		const eqks = data.slice(0, 5);
 		this.state = {
 			activeMarker: {},
-			data: eqks
+			data: eqks,
+			loading: false
 		};
 	}
 
@@ -38,12 +40,13 @@ class AnalyzeData extends Component {
 			arrayvar[index].weather = wheater;
 			index++;
 			if (index === this.state.data.length) {
-				this.setState({ data: arrayvar });
+				this.setState({ data: arrayvar, loading: false });
 				return;
 			}
 			fetchWeatherData(this.state.data[index]);
 		};
 		if (this.state.data && this.state.data.length) {
+			this.setState({ loading: true });
 			fetchWeatherData(this.state.data[index]);
 		}
 	}
@@ -66,6 +69,9 @@ class AnalyzeData extends Component {
 		};
 
 		const renderWeather = (weather, time) => {
+			if (this.state.loading) {
+				return <Spinner />;
+			}
 			if (!weather) {
 				return <p>N/A</p>;
 			}
@@ -84,6 +90,9 @@ class AnalyzeData extends Component {
 		};
 
 		const renderWeatherData = (weather, time) => {
+			if (this.state.loading) {
+				return <Spinner />;
+			}
 			if (!weather) {
 				return <p>N/A</p>;
 			}

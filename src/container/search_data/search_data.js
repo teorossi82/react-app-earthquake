@@ -13,6 +13,7 @@ import { setSearchValue } from '../../store/search/search.actions';
 import { setLocation } from '../../store/location/location.actions';
 import { Api } from '../../config';
 import SearchBar from '../../components/search_bar/search_bar';
+import Spinner from '../../components/spinner/spinner';
 import Map from '../../components/maps/maps.MarkerClikable';
 import CustomDatePicker from '../../components/custom_date_picker/custom_date_picker';
 import CustomSlider from '../../components/custom_slider/custom_slider';
@@ -111,7 +112,7 @@ class SearchData extends Component {
 
 		const renderMap = () => {
 			if (this.props.earthquakes && this.props.earthquakes.loading) {
-				return <div>Loading...</div>;
+				return <Spinner />
 			}
 			return (
 				<div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Switch, Route } from 'react-router-dom';
+import { NavLink, Switch, Route } from 'react-router-dom';
 
 import Header from './components/header/header';
 import SearchData from './container/search_data/search_data';
@@ -19,20 +19,20 @@ const App = () => {
 					<div className="app-panel app-panel-left">
 						<ul className="content-menu">
 							<li className="block-menu">
-								<Link to="/">Ricerca</Link>
+								<NavLink exact activeClassName="active" to="/">Ricerca</NavLink>
 							</li>
 							<li className="block-menu">
-								<Link to="/analyze">Analisi</Link>
+								<NavLink activeClassName="active" to="/analyze">Analisi</NavLink>
 							</li>
 						</ul>
 					</div>
 				</div>
 				<div className="menu-content">
 					<div className="block-menu">
-						<Link to="/">Ricerca</Link>
+						<NavLink exact activeClassName="active" to="/">Ricerca</NavLink>
 					</div>
 					<div className="block-menu">
-						<Link to="/analyze">Analisi</Link>
+						<NavLink activeClassName="active" to="/analyze">Analisi</NavLink>
 					</div>
 				</div>
 				<div className="main-content col-md-10 col-sm-10 col-xs-12">

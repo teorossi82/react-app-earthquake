@@ -28,4 +28,21 @@
 	.media_desc {
 		font-size: 0.80em;
 	}
+	.box-iframeVideo {
+		position: absolute;
+	    z-index: 10;
+	    max-width: 100%;
+	    iframe {
+	    	border: none;
+	    	background: #f9f9f9;
+	    	width: 100%;
+	    }
+	    .box-header {
+	    	text-align: right;
+		    padding: 5px;
+		    background: #f9f9f9;
+		    border: 1px solid #ddd;
+		    border-radius: 5px 5px 0 0;
+	    }
+	}
 }
